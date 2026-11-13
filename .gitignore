@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+bin/
+backups/
+tunnel.log
+*.tmp

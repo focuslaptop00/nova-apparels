@@ -1,0 +1,22 @@
+=======================================================
+NOVA APPARELS - PARTNER LIVE SHAREABLE PORTAL LINK
+=======================================================
+
+SHARE THIS LINK WITH KIRAN & ANURAG:
+https://gourmet-wearing-asset-enhanced.trycloudflare.com
+
+Features:
+- Works on Android, iPhone, Tablet, and Windows PC.
+- No software or app installation needed - opens in any browser.
+- Real-time live access to:
+  * All 18 Orders (Ready to Ship, Shipped, Delivered, Cancelled, Returned)
+  * Bank Payments (Received ₹839.87 from 2 Settled Orders)
+  * Upcoming Payouts (13 Nov –₹61.52, 16 Nov –₹175.00)
+  * Partner Investment & Recovery Hisab (Arsh & Anurag)
+  * Supplier Ajay Sir Notebook Expenses & Rates
+
+Permanent Cloud Option:
+If you want the website to stay online 24/7 even when your laptop is turned off,
+we can deploy it to Render.com with a permanent address like:
+https://nova-apparels.onrender.com (100% Free).
+=======================================================

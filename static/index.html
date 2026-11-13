@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Apparels — Meesho Business &amp; Hisab Portal</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Left Dark Sidebar (Meesho-style clean navigation) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-box">
+        <div class="brand-avatar" id="brandAvatarBtn" title="Nova Apparels">NA</div>
+        <div class="brand-info">
+          <div class="brand-name">Nova Apparels</div>
+          <div class="brand-sub">Meesho Seller Hub &amp; Hisab</div>
+        </div>
+        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Collapse Side Panel">&laquo;</button>
+      </div>
+
+      <div class="nav-section-label">MAIN MENU</div>
+      <nav class="nav-menu" id="navMenu">
+        <button class="nav-item active" data-page="home" title="Home Overview">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Home Overview</span>
+        </button>
+        <button class="nav-item" data-page="orders" title="All Orders">
+          <span class="nav-icon">📦</span>
+          <span class="nav-text">All Orders</span>
+          <span class="nav-badge" id="badgeTotalOrders">0</span>
+        </button>
+        <button class="nav-item" data-page="cancellations" title="Cancellations">
+          <span class="nav-icon">❌</span>
+          <span class="nav-text">Cancellations</span>
+          <span class="nav-badge badge-red" id="badgeCancelled">0</span>
+        </button>
+        <button class="nav-item" data-page="returns" title="Returns &amp; RTO">
+          <span class="nav-icon">↩️</span>
+          <span class="nav-text">Returns &amp; RTO</span>
+          <span class="nav-badge badge-orange" id="badgeReturns">0</span>
+        </button>
+
+        <div class="nav-section-label">MONEY &amp; HISAB</div>
+        <button class="nav-item" data-page="payments" title="Payments &amp; Bank">
+          <span class="nav-icon">🏦</span>
+          <span class="nav-text">Payments &amp; Bank</span>
+          <span class="nav-badge badge-amber" id="badgePendingPay">0</span>
+        </button>
+        <button class="nav-item" data-page="expenses" title="Expenses &amp; Capital">
+          <span class="nav-icon">🧾</span>
+          <span class="nav-text">Expenses &amp; Capital</span>
+        </button>
+        <button class="nav-item" data-page="team" title="Team (Arsh, Kiran, Anurag)">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Team (Arsh, Kiran, Anurag)</span>
+        </button>
+
+        <div class="nav-section-label">TOOLS</div>
+        <button class="nav-item" data-page="import" title="Import CSV &amp; Backup">
+          <span class="nav-icon">📥</span>
+          <span class="nav-text">Import CSV &amp; Backup</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-tip">
+          <strong>Simple Guide:</strong> Click any tab above to see exact orders, reasons, expenses &amp; bank payout dates.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-area">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle" title="Toggle Menu">☰</button>
+          <div>
+            <h1 class="page-title" id="pageTitle">Welcome back, Nova Apparels</h1>
+            <p class="page-subtitle" id="pageSubtitle">All orders, cancellations, returns, expenses &amp; bank payments in one simple place</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <div class="active-member-box" title="Who is using the portal right now?">
+            <span class="member-label">Active Member:</span>
+            <select id="activeMemberSelect" class="member-select">
+              <option value="Arsh">Arsh (Investor + Manager)</option>
+              <option value="Kiran">Kiran (Investor + Manager)</option>
+              <option value="Anurag">Anurag (Technical Manager)</option>
+            </select>
+          </div>
+          <button class="btn btn-outline" id="btnQuickExpense">+ Add Expense</button>
+          <button class="btn btn-primary" id="btnQuickOrder">+ Add Order</button>
+        </div>
+      </header>
+
+      <!-- Content Pages -->
+      <main class="content-wrap">
+
+        <!-- 1. HOME OVERVIEW PAGE -->
+        <section class="page active" id="page-home">
+          <!-- Top Summary Cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card kpi-purple" data-goto="orders">
+              <div class="kpi-top">
+                <span class="kpi-label">Total Orders (Ajj Tak)</span>
+                <span class="kpi-icon">📦</span>
+              </div>
+              <div class="kpi-value" id="kpiTotalOrders">0</div>
+              <div class="kpi-sub" id="kpiOrderSplit">COD: 0 | Prepaid: 0</div>
+            </div>
+
+            <div class="kpi-card kpi-green" data-goto="payments">
+              <div class="kpi-top">
+                <span class="kpi-label">Received in Bank (Settled)</span>
+                <span class="kpi-icon">✅</span>
+              </div>
+              <div class="kpi-value" id="kpiSettledAmount">₹0</div>
+              <div class="kpi-sub" id="kpiDeliveredCount">0 Delivered Orders</div>
+            </div>
+
+            <div class="kpi-card kpi-amber" data-goto="payments">
+              <div class="kpi-top">
+                <span class="kpi-label">Pending Payment (Auna Baki)</span>
+                <span class="kpi-icon">⏳</span>
+              </div>
+              <div class="kpi-value" id="kpiPendingAmount">₹0</div>
+              <div class="kpi-sub" id="kpiNextPayout">Next payout: —</div>
+            </div>
+
+            <div class="kpi-card kpi-red" data-goto="cancellations">
+              <div class="kpi-top">
+                <span class="kpi-label">Cancelled Orders</span>
+                <span class="kpi-icon">❌</span>
+              </div>
+              <div class="kpi-value" id="kpiCancelledCount">0</div>
+              <div class="kpi-sub">Click to view reasons</div>
+            </div>
+
+            <div class="kpi-card kpi-orange" data-goto="returns">
+              <div class="kpi-top">
+                <span class="kpi-label">Returns &amp; RTO</span>
+                <span class="kpi-icon">↩️</span>
+              </div>
+              <div class="kpi-value" id="kpiReturnsCount">0</div>
+              <div class="kpi-sub" id="kpiReturnDeduction">Deductions: ₹0</div>
+            </div>
+
+            <div class="kpi-card kpi-blue" data-goto="expenses">
+              <div class="kpi-top">
+                <span class="kpi-label">Total Expenses Spent</span>
+                <span class="kpi-icon">🧾</span>
+              </div>
+              <div class="kpi-value" id="kpiTotalExpenses">₹0</div>
+              <div class="kpi-sub" id="kpiTotalInvestments">Capital Invested: ₹0</div>
+            </div>
+          </div>
+
+          <!-- To-do / Quick Status Strip (like Meesho To-do list) -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Order Status At a Glance (Current Situation)</h2>
+                <p class="card-desc">Click any box to open filtered orders immediately</p>
+              </div>
+            </div>
+            <div class="status-strip" id="statusStrip">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <!-- Business Insights Chart (Last 14 Days) -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Business Insights (Last 14 Days)</h2>
+                  <p class="card-desc">Daily orders &amp; sales trend</p>
+                </div>
+              </div>
+              <div class="chart-box" id="dailyChartBox"></div>
+            </div>
+
+            <!-- Upcoming Payments ("Kdo Augi") -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Pending Bank Payments (Kdo Augi?)</h2>
+                  <p class="card-desc">Orders waiting for Meesho bank settlement</p>
+                </div>
+                <button class="btn btn-sm btn-outline" data-goto-btn="payments">View All</button>
+              </div>
+              <div id="homeUpcomingPayouts" class="mini-list"></div>
+            </div>
+          </div>
+
+          <!-- Team Snapshot + Recent Orders -->
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Nova Apparels Team Hisab</h2>
+                  <p class="card-desc">Who invested &amp; spent how much</p>
+                </div>
+                <button class="btn btn-sm btn-outline" data-goto-btn="team">Team Details</button>
+              </div>
+              <div id="homeTeamSummary" class="team-mini-grid"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Latest Orders</h2>
+                  <p class="card-desc">Most recent orders with initial &amp; current status</p>
+                </div>
+                <button class="btn btn-sm btn-outline" data-goto-btn="orders">All Orders</button>
+              </div>
+              <div id="homeRecentOrders" class="mini-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. ALL ORDERS PAGE -->
+        <section class="page" id="page-orders">
+          <div class="card">
+            <div class="filter-bar">
+              <input type="text" id="orderSearch" class="input search-input" placeholder="Search Order ID, Product, Customer, SKU..." />
+              <select id="filterOrderStatus" class="input">
+                <option value="">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Ready to Ship">Ready to Ship</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Returned">Returned</option>
+                <option value="RTO">RTO</option>
+              </select>
+              <select id="filterPayMode" class="input">
+                <option value="">COD &amp; Prepaid</option>
+                <option value="COD">COD Only</option>
+                <option value="Prepaid">Prepaid Only</option>
+              </select>
+              <select id="filterPayStatus" class="input">
+                <option value="">All Payment States</option>
+                <option value="Settled">Settled in Bank</option>
+                <option value="Pending">Payment Pending</option>
+                <option value="On Hold">On Hold</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+              <input type="date" id="filterDateFrom" class="input" title="From Date" />
+              <input type="date" id="filterDateTo" class="input" title="To Date" />
+              <button class="btn btn-outline" id="btnResetFilters">Reset</button>
+            </div>
+
+            <div class="table-meta" id="ordersTableMeta">Showing 0 orders</div>
+
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date &amp; Order ID</th>
+                    <th>Order Details (Product &amp; Customer)</th>
+                    <th>Mode</th>
+                    <th>Amount</th>
+                    <th>Status (Started &rarr; Current)</th>
+                    <th>Bank Payment Status</th>
+                    <th>Member</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. CANCELLATIONS PAGE -->
+        <section class="page" id="page-cancellations">
+          <div class="kpi-grid kpi-grid-3">
+            <div class="kpi-card kpi-red">
+              <div class="kpi-top"><span class="kpi-label">Total Cancelled Orders</span><span class="kpi-icon">❌</span></div>
+              <div class="kpi-value" id="cancelPageCount">0</div>
+              <div class="kpi-sub">All time cancelled</div>
+            </div>
+            <div class="kpi-card kpi-amber">
+              <div class="kpi-top"><span class="kpi-label">Cancelled Order Value</span><span class="kpi-icon">💸</span></div>
+              <div class="kpi-value" id="cancelPageValue">₹0</div>
+              <div class="kpi-sub">Lost gross order value</div>
+            </div>
+            <div class="kpi-card kpi-purple">
+              <div class="kpi-top"><span class="kpi-label">Cancellation Rate</span><span class="kpi-icon">📉</span></div>
+              <div class="kpi-value" id="cancelPageRate">0%</div>
+              <div class="kpi-sub">Out of total orders</div>
+            </div>
+          </div>
+
+          <div class="grid-2-1">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Cancelled Orders &amp; Reasons</h2>
+                  <p class="card-desc">Every cancelled order with date, who cancelled &amp; exact reason</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Order Date / Cancel Date</th>
+                      <th>Order ID &amp; Product</th>
+                      <th>Mode &amp; Amt</th>
+                      <th>Cancelled By</th>
+                      <th>Exact Reason</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cancelTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Top Cancellation Reasons</h2>
+                  <p class="card-desc">Why orders are getting cancelled</p>
+                </div>
+              </div>
+              <div id="cancelReasonsBreakdown" class="reason-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. RETURNS & RTO PAGE -->
+        <section class="page" id="page-returns">
+          <div class="kpi-grid kpi-grid-3">
+            <div class="kpi-card kpi-orange">
+              <div class="kpi-top"><span class="kpi-label">Total Returns + RTO</span><span class="kpi-icon">↩️</span></div>
+              <div class="kpi-value" id="returnPageCount">0</div>
+              <div class="kpi-sub" id="returnPageSplit">Customer Returns: 0 | RTO: 0</div>
+            </div>
+            <div class="kpi-card kpi-red">
+              <div class="kpi-top"><span class="kpi-label">Return Shipping / Loss</span><span class="kpi-icon">🚚</span></div>
+              <div class="kpi-value" id="returnPageDeduction">₹0</div>
+              <div class="kpi-sub">Total return deductions</div>
+            </div>
+            <div class="kpi-card kpi-purple">
+              <div class="kpi-top"><span class="kpi-label">Return Rate</span><span class="kpi-icon">📊</span></div>
+              <div class="kpi-value" id="returnPageRate">0%</div>
+              <div class="kpi-sub">Out of total orders</div>
+            </div>
+          </div>
+
+          <div class="grid-2-1">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Returned &amp; RTO Orders</h2>
+                  <p class="card-desc">Track return reason, parcel condition/status &amp; deduction fee</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Order / Return Date</th>
+                      <th>Order ID &amp; Product</th>
+                      <th>Type (Return / RTO)</th>
+                      <th>Return Reason</th>
+                      <th>Parcel Status</th>
+                      <th>Fee / Loss</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="returnTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Top Return Reasons</h2>
+                  <p class="card-desc">Spot sizing or quality complaints fast</p>
+                </div>
+              </div>
+              <div id="returnReasonsBreakdown" class="reason-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. PAYMENTS & SETTLEMENTS PAGE -->
+        <section class="page" id="page-payments">
+          <div class="kpi-grid kpi-grid-4">
+            <div class="kpi-card kpi-green">
+              <div class="kpi-top"><span class="kpi-label">Acc Ch Agi (Settled in Bank)</span><span class="kpi-icon">🏦</span></div>
+              <div class="kpi-value" id="paySettledTotal">₹0</div>
+              <div class="kpi-sub" id="paySettledOrders">0 orders settled</div>
+            </div>
+            <div class="kpi-card kpi-amber">
+              <div class="kpi-top"><span class="kpi-label">Pending (Kdo Augi)</span><span class="kpi-icon">⏳</span></div>
+              <div class="kpi-value" id="payPendingTotal">₹0</div>
+              <div class="kpi-sub" id="payPendingOrders">0 orders awaiting payout</div>
+            </div>
+            <div class="kpi-card kpi-blue">
+              <div class="kpi-top"><span class="kpi-label">Gross Active Sales</span><span class="kpi-icon">💰</span></div>
+              <div class="kpi-value" id="payGrossSales">₹0</div>
+              <div class="kpi-sub">Excludes Cancelled/Returned</div>
+            </div>
+            <div class="kpi-card kpi-purple">
+              <div class="kpi-top"><span class="kpi-label">Est. Net Profit</span><span class="kpi-icon">📈</span></div>
+              <div class="kpi-value" id="payNetProfit">₹0</div>
+              <div class="kpi-sub">After product cost, returns &amp; ops expenses</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Anurag Bank &rarr; Arsh Investment Recovery Hisab</h2>
+                <p class="card-desc">Saare Meesho payouts Anurag de bank ch aunde ne &rarr; otho Arsh apni supplier/business investment recover karda hai</p>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4" style="margin-bottom:14px;">
+              <div class="team-stat-box">
+                <div class="team-stat-label">Anurag Bank Ch Aye (Meesho)</div>
+                <div class="team-stat-val text-green" id="recBankTotal">₹0</div>
+              </div>
+              <div class="team-stat-box">
+                <div class="team-stat-label">Anurag Ne Arsh Nu Dite</div>
+                <div class="team-stat-val" id="recPaidToArsh">₹0</div>
+              </div>
+              <div class="team-stat-box">
+                <div class="team-stat-label">Anurag Kol Baki (Den Baki)</div>
+                <div class="team-stat-val text-orange" id="recWithAnurag">₹0</div>
+              </div>
+              <div class="team-stat-box">
+                <div class="team-stat-label">Arsh Investment To Recover</div>
+                <div class="team-stat-val" id="recArshRemaining">₹0</div>
+                <div class="cell-sub" id="recArshTotalSub">Total Invested: ₹0</div>
+              </div>
+            </div>
+            <form id="transferForm" class="header-actions" style="margin-bottom:12px;">
+              <input type="date" id="trDate" class="input" required />
+              <select id="trMode" class="input">
+                <option value="Cash">Cash</option>
+                <option value="UPI">UPI</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+              </select>
+              <input type="number" id="trAmount" class="input" step="0.01" min="1" placeholder="Amount ₹ (e.g. 500)" required style="width:160px;" />
+              <input type="text" id="trNotes" class="input" placeholder="Notes (e.g. Anurag paid cash to Arsh)" style="flex:1;min-width:180px;" />
+              <button type="submit" class="btn btn-primary">+ Record Anurag &rarr; Arsh Payment</button>
+            </form>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>From &rarr; To</th>
+                    <th>Mode</th>
+                    <th>Notes</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="transfersTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- MEESHO UPCOMING PAYOUT SCHEDULE (13 NOV & 16 NOV) -->
+          <div class="card" style="border: 1px solid #6366f1;">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" style="color:#4f46e5;">📅 Upcoming Meesho Payout Schedule (13 Nov &amp; 16 Nov)</h2>
+                <p class="card-desc">Exact dates, delivered payouts, and return fee deductions matching your live Meesho Supplier Hub</p>
+              </div>
+              <div id="upcomingNet7DaysBadge" class="pill pill-pending" style="font-size: 0.95rem; padding: 6px 14px; font-weight: 700;">Net Next 7 Days: –₹236.52</div>
+            </div>
+            <div id="upcomingScheduleCardsGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; padding: 16px 0;"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Pending Payments Schedule (Auna Baki)</h2>
+                <p class="card-desc">Check expected payout date &amp; click "Mark Settled" once money arrives in bank</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Order Date &amp; ID</th>
+                    <th>Product &amp; Mode</th>
+                    <th>Order Status</th>
+                    <th>Expected Amount</th>
+                    <th>Expected Date (Kdo Augi)</th>
+                    <th>Countdown</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="pendingPaymentsBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Settled Bank Payments (Account Ch Agi)</h2>
+                <p class="card-desc">Completed Meesho payouts received in Nova Apparels bank account</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Bank Payout Date</th>
+                    <th>NEFT / UTR ID</th>
+                    <th>Orders Included in Payout</th>
+                    <th>Gross &amp; Deductions</th>
+                    <th>Net Credited in Bank</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="settledPaymentsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. EXPENSES & CAPITAL PAGE -->
+        <section class="page" id="page-expenses">
+          <div class="kpi-grid kpi-grid-4">
+            <div class="kpi-card kpi-blue">
+              <div class="kpi-top"><span class="kpi-label">Total Business Expenses</span><span class="kpi-icon">🧾</span></div>
+              <div class="kpi-value" id="expTotalSpent">₹0</div>
+              <div class="kpi-sub">Stock + Packaging + Ads + Misc</div>
+            </div>
+            <div class="kpi-card kpi-purple">
+              <div class="kpi-top"><span class="kpi-label">Partner Capital Invested</span><span class="kpi-icon">💼</span></div>
+              <div class="kpi-value" id="expTotalInvested">₹0</div>
+              <div class="kpi-sub">Total capital added by partners</div>
+            </div>
+            <div class="kpi-card kpi-green">
+              <div class="kpi-top"><span class="kpi-label">Paid by Arsh / Kiran / Anurag</span><span class="kpi-icon">🤝</span></div>
+              <div class="kpi-value" id="expPartnerPocket">₹0</div>
+              <div class="kpi-sub">Personal pocket expenses</div>
+            </div>
+            <div class="kpi-card kpi-amber">
+              <div class="kpi-top"><span class="kpi-label">Paid via Company Bank</span><span class="kpi-icon">🏦</span></div>
+              <div class="kpi-value" id="expCompanyBank">₹0</div>
+              <div class="kpi-sub">Direct business account spend</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">All Expenses, Investments &amp; Withdrawals Ledger</h2>
+                <p class="card-desc">Filter by who paid or entry type</p>
+              </div>
+              <div class="header-actions">
+                <select id="filterExpenseType" class="input">
+                  <option value="">All Types</option>
+                  <option value="Expense">Expenses Only</option>
+                  <option value="Investment">Investments Only</option>
+                  <option value="Withdrawal">Withdrawals Only</option>
+                </select>
+                <select id="filterExpensePaidBy" class="input">
+                  <option value="">All Members / Bank</option>
+                  <option value="Arsh">Arsh</option>
+                  <option value="Kiran">Kiran</option>
+                  <option value="Anurag">Anurag</option>
+                  <option value="Company Bank">Company Bank</option>
+                </select>
+                <button class="btn btn-primary" id="btnAddExpensePage">+ Add Expense / Investment</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Description / Item</th>
+                    <th>Paid By</th>
+                    <th>Method</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="expensesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. TEAM & PARTNERS PAGE -->
+        <section class="page" id="page-team">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Nova Apparels Partners &amp; Team Hisab</h2>
+                <p class="card-desc">Clear role, investment, out-of-pocket expenses, orders handled &amp; profit share</p>
+              </div>
+            </div>
+            <div class="team-cards-grid" id="teamCardsGrid"></div>
+          </div>
+        </section>
+
+        <!-- 8. IMPORT & BACKUP PAGE -->
+        <section class="page" id="page-import">
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Import Meesho Orders CSV</h2>
+                  <p class="card-desc">Upload your Meesho Supplier Hub Orders CSV file to add or update many orders at once</p>
+                </div>
+              </div>
+              <div class="import-box">
+                <p class="helper-text">
+                  <strong>How it works:</strong> Download Orders CSV from Meesho Supplier Panel &rarr; Choose file below. We auto-detect common columns like <code>Order ID</code>, <code>Sub Order No</code>, <code>Order Date</code>, <code>Product Name</code>, <code>SKU</code>, <code>Quantity</code>, <code>Payment Mode</code>, <code>Status</code>, <code>Reason</code>, and <code>Amount</code>.
+                </p>
+                <input type="file" id="csvFileInput" accept=".csv" class="input file-input" />
+                <div id="csvPreviewBox" class="hidden">
+                  <div class="preview-summary" id="csvPreviewSummary"></div>
+                  <button class="btn btn-primary" id="btnConfirmImport">Import Parsed Rows Now</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Export &amp; Data Safety</h2>
+                  <p class="card-desc">Download Excel-ready CSV or full database backup anytime</p>
+                </div>
+              </div>
+              <div class="backup-actions">
+                <a href="/api/export/csv" class="btn btn-primary">Download All Orders (Excel CSV)</a>
+                <a href="/api/export/backup" class="btn btn-outline">Download Full JSON Backup</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT ORDER -->
+  <div class="modal-backdrop hidden" id="orderModal">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 id="orderModalTitle">Add New Meesho Order</h3>
+        <button class="modal-close" data-close="orderModal">&times;</button>
+      </div>
+      <form id="orderForm" class="modal-body">
+        <input type="hidden" id="orderPk" />
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label>Order ID *</label>
+            <input type="text" id="fOrderId" class="input" required placeholder="e.g. MSH-90451299" />
+          </div>
+          <div class="form-group">
+            <label>Sub-Order ID</label>
+            <input type="text" id="fSubOrderId" class="input" placeholder="e.g. 90451299_1" />
+          </div>
+          <div class="form-group">
+            <label>Order Date *</label>
+            <input type="date" id="fOrderDate" class="input" required />
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group span-2">
+            <label>Product / Item Name *</label>
+            <input type="text" id="fProductName" class="input" required placeholder="e.g. Nova Fleece Hoodie (Black, L)" />
+          </div>
+          <div class="form-group">
+            <label>SKU / Size Code</label>
+            <input type="text" id="fSku" class="input" placeholder="e.g. NA-HD-BLK-L" />
+          </div>
+        </div>
+
+        <div class="form-grid-4">
+          <div class="form-group">
+            <label>Qty</label>
+            <input type="number" id="fQuantity" class="input" min="1" value="1" />
+          </div>
+          <div class="form-group">
+            <label>Payment Mode *</label>
+            <select id="fPaymentMode" class="input">
+              <option value="COD">COD (Cash on Delivery)</option>
+              <option value="Prepaid">Prepaid (Online)</option>
+              <option value="Unverified">Unverified / Check CSV</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Order Selling Price (₹) *</label>
+            <input type="number" id="fOrderAmount" class="input" step="0.01" min="0" required placeholder="599" />
+          </div>
+          <div class="form-group">
+            <label>Our Product Cost (₹)</label>
+            <input type="number" id="fProductCost" class="input" step="0.01" min="0" value="0" />
+          </div>
+        </div>
+
+        <div class="form-grid-4">
+          <div class="form-group">
+            <label>Packaging Cost (₹)</label>
+            <input type="number" id="fPackagingCost" class="input" step="0.01" min="0" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" id="fCustomerName" class="input" placeholder="Customer name" />
+          </div>
+          <div class="form-group">
+            <label>City / State</label>
+            <input type="text" id="fCustomerCity" class="input" placeholder="e.g. Ludhiana, PB" />
+          </div>
+          <div class="form-group">
+            <label>Handled By</label>
+            <select id="fHandledBy" class="input">
+              <option value="Arsh">Arsh</option>
+              <option value="Kiran">Kiran</option>
+              <option value="Anurag">Anurag</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section-title">Order Status (Ki Status C &rarr; Current Ki A)</div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label>Initial / Started Status</label>
+            <select id="fInitialStatus" class="input">
+              <option value="Pending">Pending</option>
+              <option value="Ready to Ship">Ready to Ship</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Current Status *</label>
+            <select id="fCurrentStatus" class="input">
+              <option value="Pending">Pending</option>
+              <option value="Ready to Ship">Ready to Ship</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Returned">Returned</option>
+              <option value="RTO">RTO (Undelivered Return)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Status Note</label>
+            <input type="text" id="fStatusNote" class="input" placeholder="Optional update note" />
+          </div>
+        </div>
+
+        <!-- Cancellation Extra Fields -->
+        <div class="conditional-box hidden" id="cancelFieldsBox">
+          <div class="form-section-title text-red">Cancellation Details</div>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Cancelled By</label>
+              <select id="fCancelledBy" class="input">
+                <option value="Customer">Customer</option>
+                <option value="Seller">Seller (Nova Apparels)</option>
+                <option value="Meesho / Courier">Meesho / Courier</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Cancel Date</label>
+              <input type="date" id="fCancelDate" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Cancellation Reason *</label>
+              <input type="text" id="fCancelReason" class="input" placeholder="e.g. Out of stock / Customer changed mind" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Return Extra Fields -->
+        <div class="conditional-box hidden" id="returnFieldsBox">
+          <div class="form-section-title text-orange">Return / RTO Details</div>
+          <div class="form-grid-4">
+            <div class="form-group">
+              <label>Return Type</label>
+              <select id="fReturnType" class="input">
+                <option value="Customer Return">Customer Return</option>
+                <option value="Courier RTO">Courier RTO</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Return Parcel Status</label>
+              <select id="fReturnStatus" class="input">
+                <option value="Initiated">Initiated</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Received">Received at Warehouse</option>
+                <option value="Claim Raised">Wrong/Damaged Claim Raised</option>
+                <option value="Claim Approved">Claim Approved</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Return Date</label>
+              <input type="date" id="fReturnDate" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Return Fee / Deduction (₹)</label>
+              <input type="number" id="fReturnDeduction" class="input" step="0.01" min="0" value="0" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Return Reason *</label>
+            <input type="text" id="fReturnReason" class="input" placeholder="e.g. Size issue / Wrong color / Customer unreachable" />
+          </div>
+        </div>
+
+        <div class="form-section-title">Bank Settlement &amp; Payout (Payment Hisab)</div>
+        <div class="form-grid-4">
+          <div class="form-group">
+            <label>Payment Status</label>
+            <select id="fPaymentStatus" class="input">
+              <option value="Pending">Pending (Auna Baki)</option>
+              <option value="Settled">Settled (Acc Ch Agi)</option>
+              <option value="On Hold">On Hold / Dispute</option>
+              <option value="Not Applicable">Not Applicable (Cancel/Return)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Expected Date (Kdo Augi)</label>
+            <input type="date" id="fExpectedPayoutDate" class="input" />
+          </div>
+          <div class="form-group">
+            <label>Bank Settled Date</label>
+            <input type="date" id="fSettledDate" class="input" />
+          </div>
+          <div class="form-group">
+            <label>Net Settlement Amt (₹)</label>
+            <input type="number" id="fSettledAmount" class="input" step="0.01" min="0" value="0" />
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Bank UTR / Meesho Transaction ID</label>
+            <input type="text" id="fUtrReference" class="input" placeholder="e.g. UTR4112098731" />
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <input type="text" id="fNotes" class="input" placeholder="Any extra detail..." />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close="orderModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ORDER HISTORY / DETAIL -->
+  <div class="modal-backdrop hidden" id="historyModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="historyModalTitle">Order Timeline</h3>
+        <button class="modal-close" data-close="historyModal">&times;</button>
+      </div>
+      <div class="modal-body" id="historyModalBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-close="historyModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MARK PAYMENT SETTLED -->
+  <div class="modal-backdrop hidden" id="settleModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Mark Payment Received in Bank</h3>
+        <button class="modal-close" data-close="settleModal">&times;</button>
+      </div>
+      <form id="settleForm" class="modal-body">
+        <input type="hidden" id="settleOrderPk" />
+        <p class="helper-text" id="settleOrderInfo"></p>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Bank Settled Date *</label>
+            <input type="date" id="sSettledDate" class="input" required />
+          </div>
+          <div class="form-group">
+            <label>Net Credited Amount (₹) *</label>
+            <input type="number" id="sSettledAmount" class="input" step="0.01" min="0" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>UTR / Bank Reference No.</label>
+          <input type="text" id="sUtr" class="input" placeholder="e.g. UTR512349876" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close="settleModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm Bank Settlement</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD EXPENSE / INVESTMENT -->
+  <div class="modal-backdrop hidden" id="expenseModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Add Expense / Investment</h3>
+        <button class="modal-close" data-close="expenseModal">&times;</button>
+      </div>
+      <form id="expenseForm" class="modal-body">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Date *</label>
+            <input type="date" id="eDate" class="input" required />
+          </div>
+          <div class="form-group">
+            <label>Entry Type *</label>
+            <select id="eType" class="input">
+              <option value="Expense">Business Expense</option>
+              <option value="Investment">Partner Capital Investment</option>
+              <option value="Withdrawal">Partner Profit Withdrawal</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="eCategory" class="input">
+              <option value="Stock / Inventory">Stock / Inventory</option>
+              <option value="Packaging">Packaging Material</option>
+              <option value="Ads & Marketing">Ads &amp; Marketing</option>
+              <option value="Shipping / Logistics">Shipping / Logistics</option>
+              <option value="Tech / Software">Tech / Software</option>
+              <option value="Office / Rent">Office / Rent / Bills</option>
+              <option value="Capital Investment">Capital Investment</option>
+              <option value="Profit Share">Profit Share / Withdrawal</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Paid By *</label>
+            <select id="ePaidBy" class="input">
+              <option value="Arsh">Arsh</option>
+              <option value="Kiran">Kiran</option>
+              <option value="Anurag">Anurag</option>
+              <option value="Company Bank">Company Bank</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description / Title *</label>
+          <input type="text" id="eTitle" class="input" required placeholder="e.g. 100 Polybags + Thermal Tape" />
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Amount (₹) *</label>
+            <input type="number" id="eAmount" class="input" step="0.01" min="1" required placeholder="1500" />
+          </div>
+          <div class="form-group">
+            <label>Payment Method</label>
+            <select id="eMethod" class="input">
+              <option value="UPI">UPI</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Cash">Cash</option>
+              <option value="Card">Card</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <input type="text" id="eNotes" class="input" placeholder="Optional bill/notes..." />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close="expenseModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Entry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT MEMBER -->
+  <div class="modal-backdrop hidden" id="memberModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="memberModalTitle">Edit Member</h3>
+        <button class="modal-close" data-close="memberModal">&times;</button>
+      </div>
+      <form id="memberForm" class="modal-body">
+        <input type="hidden" id="mId" />
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Role</label>
+            <input type="text" id="mRole" class="input" required />
+          </div>
+          <div class="form-group">
+            <label>Profit Share (%)</label>
+            <input type="number" id="mShare" class="input" step="0.5" min="0" max="100" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone / Contact</label>
+          <input type="text" id="mPhone" class="input" placeholder="Optional phone number" />
+        </div>
+        <div class="form-group">
+          <label>Responsibilities / Notes</label>
+          <input type="text" id="mNotes" class="input" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close="memberModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Member</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
