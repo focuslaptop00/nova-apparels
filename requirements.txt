@@ -1,1 +1,1 @@
-gunicorn==22.0.0
+# Nova Apparels Portal - Pure Python Standard Library (Zero external dependencies needed)

@@ -2,7 +2,7 @@ services:
   - type: web
     name: nova-apparels
     runtime: python
-    buildCommand: "pip install -r requirements.txt"
+    buildCommand: ""
     startCommand: "python app.py"
     plan: free
     autoDeploy: true
